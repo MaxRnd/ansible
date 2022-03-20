@@ -1,0 +1,22 @@
+---
+- name: install Apache web server
+  hosts: nodes
+
+  tasks:
+  - name: install httpd
+    package:
+      name: httpd
+      state: present
+  - name: enable and start httpd
+    service: name=httpd enabled=yes state=started
+  - name: file index.html creation
+    copy:
+      dest: /var/www/html/index.html
+      content: "Welcome to my web server"
+  - name: configure firewalld
+    firewalld:
+      immediate: yes
+      permanent: yes
+      service: http
+      state: enabled
+
