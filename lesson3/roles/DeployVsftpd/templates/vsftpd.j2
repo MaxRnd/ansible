@@ -1,0 +1,25 @@
+# Allow anonymous FTP? (Beware - allowed by default if you comment this out).
+anonymous_enable={{ ftp_anonymous_enable }}
+#
+# Uncomment this to allow local users to log in.
+local_enable=YES
+#
+# Uncomment this to enable any form of FTP write command.
+write_enable={{ ftp_write_enable }}
+#
+# Default umask for local users is 077. You may wish to change this to 022,
+# if your users expect that (022 is used by most other ftpd's)
+local_umask=022
+#
+# Uncomment this to allow the anonymous FTP user to upload files. This only
+# has an effect if the above global write enable is activated. Also, you will
+# obviously need to create a directory writable by the FTP user.
+# When SELinux is enforcing check for SE bool allow_ftpd_anon_write, allow_ftpd_full_access
+anon_upload_enable={{ ftp_anon_upload_enable }}
+#anon_mkdir_write_enable=YES
+dirmessage_enable=YES
+#
+# Activate logging of uploads/downloads.
+xferlog_enable=YES
+pam_service_name=vsftpd
+userlist_enable=YES

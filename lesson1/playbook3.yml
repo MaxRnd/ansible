@@ -10,7 +10,10 @@
       regexp: '^(GRUB_CMDLINE_LINUX=")(resume=.*)'
       line: '\1net.ifnames=0 biosdevname=0 \2' 
       backrefs: yes
+    register: result
+#  - debug:
+#      var: result.changed
   - name: invoke grub2-mkconfig
     command: /usr/sbin/grub2-mkconfig -o /boot/grub2/grub.cfg
-
-
+    when:
+      - result.changed == 1

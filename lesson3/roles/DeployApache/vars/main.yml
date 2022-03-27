@@ -1,0 +1,3 @@
+---
+# vars file for DeployApache
+  web_server_vendor: Apache

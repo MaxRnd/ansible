@@ -1,0 +1,37 @@
+---
+# tasks file for DeployVsftpd
+
+#  tasks:
+  - name: install {{ ftpdaemon }}
+    package:
+      name: "{{ ftpdaemon }}"
+      state: present
+  - name: use template for create {{ ftpdaemon }} config file
+    template:
+      src: vsftpd.j2
+      dest: /etc/vsftpd/vsftpd.conf
+  - name: Get SELinux boolean "ftpd_anon_write"
+    command: /usr/sbin/getsebool ftpd_anon_write
+    register: seboolstate
+  - name: Toggles SELinux boolean "ftpd_anon_write"
+    command: /usr/sbin/setsebool -P ftpd_anon_write true
+    notify:
+      - restart_vsftpd
+    when:  seboolstate.stdout != "ftpd_anon_write --> on"
+  - name: enable and start {{ ftpdaemon }}
+    service: name={{ ftpdaemon }} enabled=yes state=started
+  - name: Create a directory /var/ftp/pub/upload
+    file:
+      path: /var/ftp/pub/upload
+      state: directory
+      owner: ftp
+      seuser: system_u
+      setype: public_content_rw_t  
+    notify:
+      - restart_vsftpd
+  - name: configure firewalld
+    firewalld:
+      immediate: yes
+      permanent: yes
+      service: ftp
+      state: enabled

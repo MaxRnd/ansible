@@ -1,0 +1,22 @@
+---
+# tasks file for DeployApache
+
+#  tasks:
+  - name: install httpd
+    package:
+      name: httpd
+      state: present
+  - name: enable and start httpd
+    service: name=httpd enabled=yes state=started
+  - name: use template for create file index.html
+    template:
+      src: index.j2
+      dest: /var/www/html/index.html
+    notify:
+      - restart_httpd
+  - name: configure firewalld
+    firewalld:
+      immediate: yes
+      permanent: yes
+      service: http
+      state: enabled

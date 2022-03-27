@@ -1,0 +1,7 @@
+---
+# vars file for DeployVsftpd
+  ftpdaemon: vsftpd
+  ftp_anonymous_enable: YES
+  ftp_write_enable: YES
+  ftp_anon_upload_enable: YES
+

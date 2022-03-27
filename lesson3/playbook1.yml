@@ -1,0 +1,7 @@
+---
+- name: use DeployApache role
+  hosts: nodes
+
+  roles:
+    - role: DeployApache
+

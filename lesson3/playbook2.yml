@@ -1,0 +1,7 @@
+---
+- name: use DeployVsftpd role
+  hosts: nodes
+
+  roles:
+    - role: DeployVsftpd
+
